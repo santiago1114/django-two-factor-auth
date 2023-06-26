@@ -67,6 +67,10 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
+#: plugins/email/method.py:44
+msgid "We sent you an email, please enter the token we sent."
+msgstr "Se envió un código para autenticación, por favor revise su correo electrónico."
+
 #: plugins/phonenumber/forms.py:10 plugins/phonenumber/forms.py:25
 msgid "Phone Number"
 msgstr "Número de Teléfono"

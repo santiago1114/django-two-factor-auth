@@ -14,6 +14,7 @@ from two_factor.plugins.phonenumber.utils import (
 from ..forms import DisableForm
 from ..utils import default_device
 from .utils import class_view_decorator
+from django.conf import settings
 
 
 @class_view_decorator(never_cache)
@@ -26,7 +27,7 @@ class ProfileView(TemplateView):
     account. If two-factor is enabled, it also lists the primary verification
     method and backup verification methods.
     """
-    template_name = 'two_factor/profile/profile.html'
+    template_name = 'two_factor/profile/profile.html' if "jazzmin" not in settings.INSTALLED_APPS else 'two_factor/jazzmin/profile/profile.html'
 
     def get_context_data(self, **kwargs):
         try:
@@ -48,7 +49,7 @@ class DisableView(FormView):
     """
     View for disabling two-factor for a user's account.
     """
-    template_name = 'two_factor/profile/disable.html'
+    template_name = 'two_factor/profile/disable.html' if "jazzmin" not in settings.INSTALLED_APPS else 'two_factor/jazzmin/profile/disable.html'
     success_url = lazy(resolve_url, str)(settings.LOGIN_REDIRECT_URL)
     form_class = DisableForm
 

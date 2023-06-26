@@ -41,7 +41,7 @@ from two_factor.utils import totp_digits
 from two_factor.views.mixins import OTPRequiredMixin
 
 from ..forms import (
-    AuthenticationTokenForm, BackupTokenForm, DeviceValidationForm, MethodForm,
+    CustomAuthenticationForm, AuthenticationTokenForm, BackupTokenForm, DeviceValidationForm, MethodForm,
     TOTPDeviceForm,
 )
 from ..utils import default_device, get_otpauth_url
@@ -79,7 +79,7 @@ class LoginView(RedirectURLMixin, IdempotentSessionWizardView):
 
     template_name = 'two_factor/core/login.html'
     form_list = (
-        (AUTH_STEP, AuthenticationForm),
+        (AUTH_STEP, CustomAuthenticationForm),
         (TOKEN_STEP, AuthenticationTokenForm),
         (BACKUP_STEP, BackupTokenForm),
     )
@@ -119,6 +119,9 @@ class LoginView(RedirectURLMixin, IdempotentSessionWizardView):
         self.device_cache = None
         self.cookies_to_delete = []
         self.show_timeout_error = False
+                
+        if "jazzmin" in settings.INSTALLED_APPS:
+            self.template_name = 'two_factor/jazzmin/core/login.html'
 
     def post(self, *args, **kwargs):
         """
@@ -441,7 +444,7 @@ class SetupView(RedirectURLMixin, IdempotentSessionWizardView):
     """
     success_url = 'two_factor:setup_complete'
     qrcode_url = 'two_factor:qr'
-    template_name = 'two_factor/core/setup.html'
+    template_name = 'two_factor/core/setup.html' if "jazzmin" not in settings.INSTALLED_APPS else 'two_factor/jazzmin/core/setup.html'
     session_key_name = 'django_two_factor-qr_secret_key'
     initial_dict = {}
     form_list = (
@@ -648,7 +651,7 @@ class BackupTokensView(FormView):
     """
     form_class = Form
     success_url = 'two_factor:backup_tokens'
-    template_name = 'two_factor/core/backup_tokens.html'
+    template_name = 'two_factor/core/backup_tokens.html' if "jazzmin" not in settings.INSTALLED_APPS else 'two_factor/jazzmin/core/backup_tokens.html'
     number_of_tokens = 10
 
     def get_device(self):

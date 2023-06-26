@@ -7,10 +7,17 @@ from django.utils.translation import gettext_lazy as _
 from django_otp.forms import OTPAuthenticationFormMixin
 from django_otp.oath import totp
 from django_otp.plugins.otp_totp.models import TOTPDevice
+from django.contrib.auth.forms import AuthenticationForm
 
 from .plugins.registry import registry
 from .utils import totp_digits
 
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+        
 
 class MethodForm(forms.Form):
     method = forms.ChoiceField(label=_("Method"),
@@ -31,7 +38,8 @@ class DeviceValidationForm(forms.Form):
 
     token.widget.attrs.update({'autofocus': 'autofocus',
                                'inputmode': 'numeric',
-                               'autocomplete': 'one-time-code'})
+                               'autocomplete': 'one-time-code',
+                               'class': 'form-control'})
     error_messages = {
         'invalid_token': _('Entered token is not valid.'),
     }
@@ -52,7 +60,8 @@ class TOTPDeviceForm(forms.Form):
 
     token.widget.attrs.update({'autofocus': 'autofocus',
                                'inputmode': 'numeric',
-                               'autocomplete': 'one-time-code'})
+                               'autocomplete': 'one-time-code',
+                               'class': 'form-control'})
 
     error_messages = {
         'invalid_token': _('Entered token is not valid.'),
@@ -114,6 +123,7 @@ class AuthenticationTokenForm(OTPAuthenticationFormMixin, forms.Form):
         'autofocus': 'autofocus',
         'pattern': '[0-9]*',  # hint to show numeric keyboard for on-screen keyboards
         'autocomplete': 'one-time-code',
+        'class': 'form-control'
     })
 
     # Our authentication form has an additional submit button to go to the

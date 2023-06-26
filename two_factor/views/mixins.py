@@ -5,6 +5,7 @@ from django.template.response import TemplateResponse
 from django.urls import Resolver404, resolve, reverse
 
 from ..utils import default_device
+from django.conf import settings
 
 
 class OTPRequiredMixin:
@@ -74,9 +75,15 @@ class OTPRequiredMixin:
             elif self.get_verification_url():
                 return redirect_to_login(request.get_full_path(), self.get_verification_url())
             else:
+                
+                template_name = 'two_factor/core/otp_required.html'
+                
+                if "jazzmin" in settings.INSTALLED_APPS:
+                    template_name = 'two_factor/jazzmin/core/otp_required.html'
+                
                 return TemplateResponse(
                     request=request,
-                    template='two_factor/core/otp_required.html',
+                    template=template_name,
                     status=403,
                 )
         return super().dispatch(request, *args, **kwargs)

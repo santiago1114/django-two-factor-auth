@@ -9,6 +9,7 @@ from two_factor.forms import (
 
 class EmailForm(forms.Form):
     email = forms.EmailField(label=_("Email address"))
+    email.widget.attrs.update({'class': 'form-control'})
 
     def __init__(self, **kwargs):
         kwargs.pop('device', None)
