@@ -19,7 +19,8 @@ class EmailForm(forms.Form):
 class DeviceValidationForm(BaseValidationForm):
     token = forms.CharField(label=_("Token"))
     token.widget.attrs.update({'autofocus': 'autofocus',
-                               'autocomplete': 'one-time-code'})
+                               'autocomplete': 'one-time-code',
+                               'class': 'form-control'})
     idempotent = False  # Once validated, the token is cleared.
 
 

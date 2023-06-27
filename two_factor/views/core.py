@@ -680,7 +680,7 @@ class SetupCompleteView(TemplateView):
     """
     View congratulation the user when OTP setup has completed.
     """
-    template_name = 'two_factor/core/setup_complete.html'
+    template_name = 'two_factor/core/setup_complete.html' if "jazzmin" not in settings.INSTALLED_APPS else 'two_factor/jazzmin/core/setup_complete.html'
 
     def get(self, request, *args, **kwargs):
         if request.session.get('next'):
