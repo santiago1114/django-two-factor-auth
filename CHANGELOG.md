@@ -1,9 +1,35 @@
 # Changelog
 
-## Unreleased
+## 1.15.5
+### Fixed
+- Include transitively replaced migrations in phonenumber migration.
+- Avoid importing PhoneDevice when not enabled.
+- Simplified URLs for phone_create/phone_delete paths.
+- Implement strict PhoneDevice identification (#661).
+- Avoid multiple registrations of the same method (#657).
+- Get all phonedevices of the user (#659).
+
+### Changed
+- Allow django-phonenumber-field 7.
+- Updated Dutch, German, and Spanish translations.
+
+### Removed
+- Python 3.7 support (EOL).
+
+## 1.15.4
+### Fixed
+- Corrected migration dependency (introduced in 6150a782b6e6).
+- Fixed throttling for PhoneDevice (#418).
+
+## 1.15.3
+### Added
+- Added Turkish translation.
+
 ### Fixed
 - Fixed a PhoneDevice migration generated even when the phonenumber plugin was
   not installed (#587).
+- Created a custom phonenumber migration to allow migration for both when the
+  model already exists (legacy installs) and for new installs (#611).
 
 ## 1.15.2
 ### Added

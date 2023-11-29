@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-two-factor-auth',
-    version='1.15.2',
+    version='1.15.5',
     description='Complete Two-Factor Authentication for Django',
     long_description=open('README.rst', encoding='utf-8').read(),
     author='Bouke Haarsma',
@@ -10,18 +10,18 @@ setup(
     url='https://github.com/jazzband/django-two-factor-auth',
     download_url='https://pypi.python.org/project/django-two-factor-auth',
     license='MIT',
-    packages=find_packages(exclude=('example', 'tests')),
+    packages=find_packages(exclude=('example', 'tests', 'tests.*')),
     install_requires=[
         'Django>=3.2',
         'django_otp>=0.8.0',
         'qrcode>=4.0.0,<7.99',
-        'django-phonenumber-field>=1.1.0,<7',
+        'django-phonenumber-field<8',
         'django-formtools',
     ],
     extras_require={
         'call': ['twilio>=6.0'],
         'sms': ['twilio>=6.0'],
-        'webauthn': ['webauthn>=1.6.0,<1.99', 'pydantic>=1.9.0,<1.99'],
+        'webauthn': ['webauthn>=1.11.0,<1.99'],
         'yubikey': ['django-otp-yubikey'],
         'phonenumbers': ['phonenumbers>=7.0.9,<8.99'],
         'phonenumberslite': ['phonenumberslite>=7.0.9,<8.99'],
@@ -41,7 +41,6 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
